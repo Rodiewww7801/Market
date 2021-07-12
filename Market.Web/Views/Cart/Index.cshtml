@@ -1,0 +1,67 @@
+﻿@model CartViewModel
+@{
+    ViewBag.Title = "Your Cart";
+}
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        .errorStyle {
+            color: red;
+            border-color: darkred
+        }
+    </style>
+</head>
+
+<h2>Your Cart</h2>
+
+
+<span class="errorStyle"> @Html.ValidationSummary()</span>
+<table class = "table">
+    <thead>
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Price</th>
+            <th scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model.OrderItems)
+        {
+        <tr>
+            <td scope="row">@Model.Products.FirstOrDefault(x => x.Id == item.ProductId).Name</td>
+            <td scope="row">@Model.Products.FirstOrDefault(x => x.Id == item.ProductId).Price</td>
+            <td scope="row">@item.Quantity</td>
+            <td scope="row">@(Model.Products.FirstOrDefault(x => x.Id == item.ProductId).Price * item.Quantity)</td>
+            <td scope="row">
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                {
+                    @Html.Hidden("productId", item.ProductId)
+                    @Html.HiddenFor(x => x.ReturnUrl)
+                    <input type="submit" class="btn btn-outline-dark" value="Remove" />
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"> </td>
+            <td>Total: <strong>@Model.TotatPrice</strong></td>
+            <td> </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div>
+    @Html.ActionLink("Continue Shopping", "ProductList", "Home")
+    @if (Model.IsValid)
+    {
+        <span class="d-flex justify-content-end" >
+        @Html.ActionLink("Checkout", "Reservation", "Order")
+        </span>
+
+    }
+</div>

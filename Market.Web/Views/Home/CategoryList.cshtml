@@ -1,0 +1,11 @@
+﻿@model ProductListViewModel
+
+@{
+
+    ViewBag.Title = Model.SelectedCategory;
+}
+<h3>Category: @Model.SelectedCategory</h3>
+@foreach(var product in @Model.Products)
+    {
+        @await Html.PartialAsync("ProductSummary", product)
+    };

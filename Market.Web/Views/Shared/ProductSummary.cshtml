@@ -1,0 +1,25 @@
+﻿@using Market.Data.Entities.ProductAggregate;
+@model Product
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<div>
+    <h3>
+        <b>@Model.Name</b>
+    </h3>
+       @Model.Category 
+       <br/>@Model.Info
+     <span>@Model.Price.ToString("$# USD")</span>
+
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        <div>
+            @Html.Hidden("productId", Model.Id)
+            @Html.Hidden("returnUrl", @Context.Request.Query["ReturnUrl"])
+            <input type="submit" class="btn btn-outline-dark" value="ADD TO CART">
+        </div>
+    }
+    <p>In Stock: @Model.QuantityInStock</p>
+</div>

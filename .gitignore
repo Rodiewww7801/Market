@@ -1,0 +1,7 @@
+packages
+/SqlToMongo/*
+.vs/
+*.suo
+*/bin/*
+*/obj/*
+*/log.txt

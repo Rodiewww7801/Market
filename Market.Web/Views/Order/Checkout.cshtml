@@ -1,0 +1,67 @@
+﻿@using Market.Data.Entities.OrderAggregate;
+@model OrderDetails
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+
+        .input-validation-error {
+            border-color: red;
+        }
+        .errorStyle {
+            color: red;
+            border-color: darkred
+        }
+    </style>
+</head>
+
+
+<h2>Checkhout Order</h2>
+<p>Please enter your contact details</p>
+
+@using (Html.BeginForm("Checkout", "Order", FormMethod.Post, new { @novalidate = "novalidate" }))
+{
+    <p class="errorStyle"> @Html.ValidationSummary(true)</p>
+    <h3>Details</h3>
+    <div>
+        @Html.LabelFor(x=>x.Name)
+        <span>@Html.TextBoxFor(x => x.Name)</span>
+        <p class="errorStyle"> @Html.ValidationMessageFor(model => model.Name)</p>
+    </div>
+    <div>
+        <label>Your Email: </label>
+        @Html.TextBoxFor(x => x.Email)
+        <p class="errorStyle"> @Html.ValidationMessageFor(model => model.Email)</p>
+    </div>
+    <h3>Address Delivery</h3>
+    <div>
+        <label>Your address:</label>
+        @Html.TextBoxFor(x => x.Address)
+        <p class="errorStyle"> @Html.ValidationMessageFor(model => model.Address)</p>
+    </div>
+    <div>
+        <label>Country: </label>
+        @Html.TextBoxFor(x => x.Country)
+        <p class="errorStyle"> @Html.ValidationMessageFor(model => model.Country)</p>
+    </div>
+    <div>
+        <label>City: </label>
+        @Html.TextBoxFor(x => x.City)
+        <p class="errorStyle"> @Html.ValidationMessageFor(model => model.City)</p>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-outline-dark" value="Confirm">
+    </div>
+}
+
+
+
+@section scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

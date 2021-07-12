@@ -1,0 +1,12 @@
+﻿@using Market.Data.Entities.ProductAggregate
+@model IEnumerable<Product>
+
+@{
+
+    ViewBag.Title = "Products";
+}
+@foreach (var product in @Model)
+{
+    @await Html.PartialAsync("ProductSummary", product)
+}
+
