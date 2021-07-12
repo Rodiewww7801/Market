@@ -25,12 +25,11 @@ namespace ReservationCheckWorker
                 mutex.WaitOne();
                 var reservList = _reservationRepository.GetAllReservations();
                 foreach (var reserv in reservList)
-                    if (DateTime.Now > reserv.TimeEnd && reserv.Deleted == false)
+                    if (DateTime.Now > reserv.TimeEnd && reserv.OrderId == null)
                     {
                         foreach (var item in reserv.ReservedItems)
                             _productRepository.AddQuantity(item.ProductId, item.ReservedQuantity);
-                        reserv.Deleted = true;
-                        _reservationRepository.Update(reserv);
+                        _reservationRepository.Remove(reserv);
                     }
                 mutex.ReleaseMutex();
                 await Task.Delay(5000, cancellationToken); // 5s

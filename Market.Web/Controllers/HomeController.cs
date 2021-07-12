@@ -1,4 +1,5 @@
-﻿using Market.Data.Repositories;
+﻿using Market.Data.Entities.ProductAggregate;
+using Market.Data.Repositories;
 using Market.Domain.Interfaces;
 using Market.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,31 +15,25 @@ namespace Market.Web.Controllers
     public class HomeController : Controller
     {
         private IProductRepository _productRepository;
-        private IReservationRepository _reservationRepository;
-        private ICartProvider _cartProvider;
 
-        public HomeController(IProductRepository productRepository, IReservationRepository reservationRepository, ICartProvider provider)
+        public HomeController(IProductRepository productRepository)
         {
 
             _productRepository = productRepository;
-            _reservationRepository = reservationRepository;
-            _cartProvider = provider;
         }
 
         public ViewResult ProductList()
         {
-            //reservation cheker
             return View(_productRepository.GetAllProducts());
         } 
 
         public ViewResult CategoryList(string category)
         {
 
-            //reservation cheker
             var model = new ProductListViewModel()
             {
                 Products = _productRepository.GetProductsSelectedCategory(category),
-                SelectedCategory = category
+                SelectedCategory = category 
             };
             return View(model);
         }

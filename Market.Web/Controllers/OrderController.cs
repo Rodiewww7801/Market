@@ -20,7 +20,6 @@ namespace Market.Web.Controllers
         private IOrderService _orderService;
         private ILogger _logger;
 
-        //private ILogger logger = Logger.CreateLogger<OrderController>();
         public OrderController(ICartProvider cartProvider,
             IReservationService reservationService,
             IReservationRepository reservationRepsoitory,
@@ -71,7 +70,6 @@ namespace Market.Web.Controllers
                 {
                     var order = _orderService.CreateOrder(orderDetails);
                     reservation.OrderId = order.Id;
-                    reservation.Deleted = true;
                     _reservationRepository.Update(reservation);
                     cart = new Order() { OrderItems = new List<OrderItem>() };
                     _cartProvider.UpdateSessionCart(cart);

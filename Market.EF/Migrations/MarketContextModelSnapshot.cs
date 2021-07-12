@@ -40,7 +40,7 @@ namespace Market.EF.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Market.Data.Entities.OrderAggregate.OrderDetails", b =>
+            modelBuilder.Entity("Market.Data.Entities.OrderAggregate.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,9 +159,6 @@ namespace Market.EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
@@ -199,11 +196,11 @@ namespace Market.EF.Migrations
                     b.ToTable("ReservedItems");
                 });
 
-            modelBuilder.Entity("Market.Data.Entities.OrderAggregate.OrderDetails", b =>
+            modelBuilder.Entity("Market.Data.Entities.OrderAggregate.OrderDetail", b =>
                 {
                     b.HasOne("Market.Data.Entities.OrderAggregate.Order", "Order")
-                        .WithOne("OrderDetails")
-                        .HasForeignKey("Market.Data.Entities.OrderAggregate.OrderDetails", "OrderId")
+                        .WithOne("OrderDetail")
+                        .HasForeignKey("Market.Data.Entities.OrderAggregate.OrderDetail", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -234,7 +231,7 @@ namespace Market.EF.Migrations
 
             modelBuilder.Entity("Market.Data.Entities.OrderAggregate.Order", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("OrderDetail");
 
                     b.Navigation("OrderItems");
                 });

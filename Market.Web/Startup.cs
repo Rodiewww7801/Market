@@ -71,7 +71,6 @@ namespace Market.Web
             services.AddHostedService<WorkerService>();
             services.AddScoped<ReservationChecker>();
 
-
            
 
         }

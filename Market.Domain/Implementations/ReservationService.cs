@@ -24,6 +24,8 @@ namespace Market.Domain.Implementations
         public bool IsActive(int reservationId)
         {
             var reservation = _reservationRepository.GetReservation(reservationId);
+            if(reservation == null)
+                return false;
             return reservation.TimeStart < DateTime.Now && reservation.TimeEnd > DateTime.Now;
         }
 
@@ -32,8 +34,7 @@ namespace Market.Domain.Implementations
             var reservation = _reservationRepository.GetReservation(reservationId);
             foreach(var item in reservation.ReservedItems)
                 _productRepository.AddQuantity(item.ProductId, item.ReservedQuantity);
-            reservation.Deleted = true;
-            _reservationRepository.Update(reservation);
+            _reservationRepository.Remove(reservation);
         }
         public List<Product> OutOfStock(Order order, out bool result )
         {
@@ -57,12 +58,11 @@ namespace Market.Domain.Implementations
         {
             var reservList = _reservationRepository.GetAllReservations();
             foreach (var reserv in reservList)
-                if (!IsActive(reserv.Id) && reserv.Deleted == false)
+                if (!IsActive(reserv.Id) && reserv.OrderId == null)
                 {
                     foreach (var item in reserv.ReservedItems)
                         _productRepository.AddQuantity(item.ProductId, item.ReservedQuantity);
-                    reserv.Deleted = true;
-                    _reservationRepository.Update(reserv);
+                    _reservationRepository.Remove(reserv);
                 }
         }
 
